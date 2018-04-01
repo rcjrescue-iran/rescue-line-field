@@ -34,6 +34,15 @@ $(document).ready(function () {
     $("#container").append(addTile(676, 517, 34));
     $("#container").append(addTile(809, 518, 35));
 
+    $("#container").append(addTile(16, 643, 36));
+    $("#container").append(addTile(147, 643, 37));
+    $("#container").append(addTile(277, 643, 39));
+    $("#container").append(addTile(405, 643, 40));
+    $("#container").append(addTile(543, 643, 41));
+
+    $("#container").append(addTile(675, 643, 42));
+    $("#container").append(addTile(809, 643, 43));
+
     $("#pickup").click(function () {
         if ($(this).hasClass("active")) {
             $(this).removeClass("active")
