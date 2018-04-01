@@ -2125,6 +2125,36 @@ html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:activ
     border-bottom-right-radius: 20px;
 }
 
+#load {
+    z-index: 999;
+    display: inline-block;
+    position: absolute;
+    right: 210px;
+    width: 60px;
+    height: 20px;
+    padding: 10px;
+    background-color: #ddd;
+    color: black;
+    text-align: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+#save {
+    z-index: 999;
+    display: inline-block;
+    position: absolute;
+    right: 120px;
+    width: 60px;
+    height: 20px;
+    padding: 10px;
+    background-color: #ddd;
+    color: black;
+    text-align: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
 .originalTile {
     width: 114px;
     height: 113px;
@@ -2142,7 +2172,7 @@ html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:activ
     cursor: pointer;
 }
 
-#pickup:hover {
+#pickup:hover, #save:hover, #load:hover {
     cursor: pointer;
 }
 
@@ -2268,4 +2298,17 @@ html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:activ
     to {
         opacity: 1;
     }
+}
+
+.toast {
+    position: absolute;
+    z-index: 999999;
+    right: 30px;
+    bottom: 30px;
+    direction: rtl;
+    background: rgba(100,100,100,0.5);
+    padding: 10px;
+    border-radius: 10px;
+    transition: all 300ms ease-in-out;
+    display: none;
 }

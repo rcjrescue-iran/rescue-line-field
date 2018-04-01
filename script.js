@@ -1,47 +1,9 @@
 $(document).ready(function () {
-    $("#container").append(addTile(11, 11, 1));
-    $("#container").append(addTile(144, 9, 2));
-    $("#container").append(addTile(279, 9, 3));
-    $("#container").append(addTile(407, 8, 4));
-    $("#container").append(addTile(543, 7, 5));
-    $("#container").append(addTile(673, 7, 6));
-    $("#container").append(addTile(809, 7, 7));
-    $("#container").append(addTile(13, 136, 8));
-    $("#container").append(addTile(144, 135, 9));
-    $("#container").append(addTile(278, 134, 10));
-    $("#container").append(addTile(407, 133, 11));
-    $("#container").append(addTile(542, 132, 12));
-    $("#container").append(addTile(673, 134, 13));
-    $("#container").append(addTile(809, 135, 14));
-    $("#container").append(addTile(14, 264, 15));
-    $("#container").append(addTile(144, 263, 16));
-    $("#container").append(addTile(278, 264, 17));
-    $("#container").append(addTile(409, 263, 18));
-    $("#container").append(addTile(543, 265, 19));
-    $("#container").append(addTile(673, 262, 20));
-    $("#container").append(addTile(809, 260, 21));
-    $("#container").append(addTile(14, 391, 22));
-    $("#container").append(addTile(145, 389, 23));
-    $("#container").append(addTile(278, 390, 24));
-    $("#container").append(addTile(407, 388, 25));
-    $("#container").append(addTile(543, 387, 26));
-    $("#container").append(addTile(676, 387, 27));
-    $("#container").append(addTile(809, 388, 28));
-    $("#container").append(addTile(146, 515, 30));
-    $("#container").append(addTile(278, 515, 31));
-    $("#container").append(addTile(406, 515, 32));
-    $("#container").append(addTile(543, 515, 33));
-    $("#container").append(addTile(676, 517, 34));
-    $("#container").append(addTile(809, 518, 35));
-
-    $("#container").append(addTile(16, 643, 36));
-    $("#container").append(addTile(147, 643, 37));
-    $("#container").append(addTile(277, 643, 39));
-    $("#container").append(addTile(405, 643, 40));
-    $("#container").append(addTile(543, 643, 41));
-
-    $("#container").append(addTile(675, 643, 42));
-    $("#container").append(addTile(809, 643, 43));
+    var items = [[11, 11, 1], [144, 9, 2], [279, 9, 3], [407, 8, 4], [543, 7, 5], [673, 7, 6], [809, 7, 7], [13, 136, 8], [144, 135, 9], [278, 134, 10], [407, 133, 11], [542, 132, 12], [673, 134, 13], [809, 135, 14], [14, 264, 15], [144, 263, 16], [278, 264, 17], [409, 263, 18], [543, 265, 19], [673, 262, 20], [809, 260, 21], [14, 391, 22], [145, 389, 23], [278, 390, 24], [407, 388, 25], [543, 387, 26], [676, 387, 27], [809, 388, 28], [146, 515, 30], [278, 515, 31], [406, 515, 32], [543, 515, 33], [676, 517, 34], [809, 518, 35], [16, 643, 36], [147, 643, 37], [277, 643, 39], [405, 643, 40], [543, 643, 41], [675, 643, 42], [809, 643, 43]];
+    for (var index in items) {
+        var item = items[index];
+        $("#container").append(addTile(item[0], item[1], item[2]));
+    }
 
     $("#pickup").click(function () {
         if ($(this).hasClass("active")) {
@@ -59,7 +21,67 @@ $(document).ready(function () {
         drop: handleCardDrop
     });
     $("#mainField").height($("#tileField").height())
-})
+
+    $("#save").click(function () {
+        var list = [];
+        $("div.tile").each(function () {
+            var item = $(this);
+            if (item.hasClass("removed")) {
+                return;
+            }
+            var left = $(item).position().left;
+            if (left > 0) {
+                return;
+            }
+            var top = $(item).position().top;
+            var data = { "number": item.data('number'), "left": left, "top": top };
+            list.push(data);
+        });
+        if (!list.length) {
+            toast("There is nothing in your storage.");
+            return;
+        }
+        var unix_time = Math.round(new Date().getTime() / 1000);
+        localStorage.setItem(unix_time, JSON.stringify(list));
+
+        toast("Your map has been saved to localStorage.");
+    });
+
+    $("#load").click(function () {
+        toast("This function does not implemented !")
+        return;
+        
+        var current_items = load_function();
+        var last_item = current_items[current_items.length - 1];
+        for (var index in last_item) {
+            var item = last_item[index];
+            item = items[item.number - 1];
+
+            ui.draggable.addClass('correct');
+            ui.draggable.position({ of: $(this), my: 'left top', at: 'left top' });            
+        }
+    });
+});
+
+function load_function() {
+    var items = [];
+    for (var key in window.localStorage) {
+        if (!window.localStorage.hasOwnProperty(key)) {
+            continue;
+        }
+        var item = window.localStorage.getItem(key);
+        items.push(JSON.parse(item));
+    }
+    return items;
+}
+
+function toast(msg) {
+    $(".toast").fadeIn();
+    $(".toast").html(msg);
+    setTimeout(() => {
+        $(".toast").fadeOut();
+    }, 3000);
+}
 
 function handleCardDrop(event, ui) {
     ui.draggable.addClass('correct');
@@ -72,7 +94,6 @@ function undo(elem) {
     var number = $("#" + elem.id).parent().find('.number');
     number.css({ 'opacity': '0' });
     angle -= 90;
-    // if (angle < 0) angle = 270;
     image.data('angle', angle);
     image.attr('data-angle', angle);
     image.css({
@@ -93,7 +114,6 @@ function repeat(elem) {
     var number = $("#" + elem.id).parent().find('.number');
     number.css({ 'opacity': '0' });
     angle += 90;
-    // if (angle >= 360) angle = 0;
     image.data('angle', angle);
     image.attr('data-angle', angle);
     image.css({
@@ -110,19 +130,20 @@ function repeat(elem) {
 
 function copy(elem) {
     var tile = $("#" + elem.id).parent();
-    var number = tile.data('number');    
+    var number = tile.data('number');
     var image = tile.find("img");
     var backgroundPos = image.css('backgroundPosition').split(" ");
     var xPos = backgroundPos[0],
         yPos = backgroundPos[1];
     xPos = xPos.replace("px");
     yPos = yPos.replace("px");
-    $("#mainField").append(newTile(-parseInt(xPos), -parseInt(yPos), number,tile.position().top, tile.position().left));
+    $("#mainField").append(newTile(-parseInt(xPos), -parseInt(yPos), number, tile.position().top, tile.position().left));
     $(".tile").draggable();
 }
 
 function recycle(elem) {
     $("#" + elem.id).parent().css({ 'opacity': '0' })
+    $("#" + elem.id).parent().addClass("removed");
 }
 
 function newTile(x, y, number) {
