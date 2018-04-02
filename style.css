@@ -2178,7 +2178,7 @@ html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:activ
 
 #field {
     position: relative;
-    border: 1px solid #ddd;
+    padding-top: 20px;
 }
 
 .container {
@@ -2205,8 +2205,7 @@ html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:activ
 #mainField {
     display: inline-block;
     width: auto;
-    position: absolute;
-    border-left: 1px solid #ddd;
+    position: absolute;    
 }
 
 .fa-camera-retro {
@@ -2300,12 +2299,13 @@ html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:activ
     }
 }
 
+
 .toast {
     position: absolute;
     z-index: 999999;
     right: 30px;
     bottom: 30px;
-    direction: rtl;
+    direction: ltr;
     background: rgba(100,100,100,0.5);
     padding: 10px;
     border-radius: 10px;
