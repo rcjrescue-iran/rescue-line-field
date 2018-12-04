@@ -14,7 +14,7 @@ $(document).ready(function () {
             $("#container").animate({ height: 145 })
         }
     })
-
+    
     $("#tileField .tilePosition").droppable({
         accept: '.tile',
         hoverClass: 'hovered',
