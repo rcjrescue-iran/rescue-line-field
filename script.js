@@ -22,25 +22,25 @@ $(document).ready(function () {
     });
     $("#mainField").height($("#tileField").height())
 
-    $("#save").click(function () {
-        save();
-    });
+    // $("#save").click(function () {
+    //     save();
+    // });
 
-    $("#load").click(function () {
-        var current_items = load_function();
-        var last_item = current_items[current_items.length - 1];
-        for (var index in last_item) {
-            var item = last_item[index];
-            var temp = items[item.number - 1];
-            var number = item.number, x = temp[0], y = temp[1];
+    // $("#load").click(function () {
+    //     var current_items = load_function();
+    //     var last_item = current_items[current_items.length - 1];
+    //     for (var index in last_item) {
+    //         var item = last_item[index];
+    //         var temp = items[item.number - 1];
+    //         var number = item.number, x = temp[0], y = temp[1];
 
-            var text = `<div style="position: relative; top: ` + item.top + `; left: ` + item.left + `; " data-number='` + number + `' class='fadeIn tile' onclick="spawnTile(` + x + `,` + y + `,` + number + `)"><span class="number">` + number + `</span><img class="tiles" data-angle='0' style='background-position:-` + x + `px -` + y + `px` + `'></div></div>`
-            $("#mainField").append(text);
-            $(".tile").draggable();
-        }
-    });
+    //         var text = `<div style="position: relative; top: ` + item.top + `; left: ` + item.left + `; " data-number='` + number + `' class='fadeIn tile' onclick="spawnTile(` + x + `,` + y + `,` + number + `)"><span class="number">` + number + `</span><img class="tiles" data-angle='0' style='background-position:-` + x + `px -` + y + `px` + `'></div></div>`
+    //         $("#mainField").append(text);
+    //         $(".tile").draggable();
+    //     }
+    // });
 
-    auto_save();
+    // auto_save();
 });
 
 function save() {
@@ -155,7 +155,8 @@ function copy(elem) {
 }
 
 function recycle(elem) {
-    $("#" + elem.id).parent().remove();
+    // $("#" + elem.id).parent().remove();
+    $("#" + elem.id).parent().css({'opacity': 0});
 }
 
 function newTile(x, y, number) {
